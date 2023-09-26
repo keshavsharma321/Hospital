@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <script src="hos.js"></script>
+    
+    <style>
+          .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        #openSidebarBtn {
+            font-size: 30px;
+            cursor: pointer;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+    </style>    
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+        <div ng-repeat="panel in panels">
+            <!-- <i class="{{panel.icon}}"></i> -->
+        <a href="" ng-click="handleHeadingClick(panel.id)">{{panel.Heading}}</a>
+        </div>
+    </div>
+    <div id="main">
+        <span id="openSidebarBtn" ng-click="openSidebar()">&#9776;</span>
+        <h1 style="text-align: center; margin-top: 30px">{{pageTitle}}</h1>
+        <div ng-show="showDashboardContent">
+       
+                <br><br>
+            <div ng-repeat="recept in receptionsit" style="margin-left: 260px; margin-top: 50px;">
+                <div style="display:flex">
+                    <div>
+               <h4> Username:<br>
+                <input class="form-control" value="{{recept.username}}" style="width: 250px; margin-top: 20px;">
+                  </div>
+                  <div style="margin-left: 250px;">
+                    <h4> Firstname:<br>
+                     <input class="form-control" value="{{recept.firstname}}" style="width: 250px; margin-top: 20px;">
+                       </div>
+                 </div>
+                 <div style="display: flex; margin-top: 80px;">
+                    <div>
+                        <h4> Lastname:<br>
+                         <input class="form-control" value="{{recept.lastname}}" style="width: 250px; margin-top: 20px;">
+                           </div>
+                           <div style="margin-left: 250px;">
+                             <h4> Gender:<br>
+                              <input class="form-control" value="{{recept.gender}}" style="width: 250px; margin-top: 20px;">
+                                </div>
+                 </div>
+              </div>
+
+
+            </div>
+            </div>
+    </div>
+    <div ng-show="showAppointmentsContent" style="margin-left: 100px;">
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Appointment ID</th>
+                    <th scope="col">FirstName</th>
+                    <th scope="col">LastName</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Gender</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="appoint in appointment">
+                    <td>{{ appoint.id }}</td>
+                    <td>{{ appoint.firstname }}</td>
+                    <td>{{ appoint.lastname }}</td>
+                    <td>{{ appoint.Age }}</td>
+                    <td>{{ appoint.problem }}</td>
+                    <td>{{ appoint.gender }}</td>
+                    <td>
+                        <button type="button" class="btn btn-dark" ng-click="addAppointment(appointment.id)">Approve</button>
+                        <button type="button" class="btn btn-dark" ng-click="editAppointment(appointment.id)">Edit</button>
+                      </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-dark" ng-click="AppointSheet()">Appointments</button>
+    </div>
+
+    <div ng-show="showPatientsContent" style="margin-left: 50px; margin-right:50px ;">
+     <br>
+     <br>
+     <table class="table" >
+        <thead>
+            <tr>
+                <th scope="col">User Id:</th>
+                <th scope="col">Firstname:</th>
+                <th scope="col">Lastname:</th>
+                <th scope="col">Gender:</th>
+                <th scope="col">Age:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="patient in patients">
+                 <td>{{patient.user_id}}</td>
+                 <td>{{patient.firstname}}</td>
+                 <td>{{patient.lastname}}</td>
+                 <td>{{patient.gender}}</td>
+                 <td>{{patient.Age}}</td>
+            </tr>
+        </tbody>
+       
+     </table>
+     <button class="btn btn-dark" ng-click="Excelsheet()">Patients</button>
+    </div>
+
+    <div ng-show="showDoctorsContent" style="margin-left: 50px; margin-right:50px ;">
+        <br>
+        <br>
+        <table class="table">
+           <thead>
+               <tr>
+                   <th scope="col">User:</th>
+                   <th scope="col">Firstname:</th>
+                   <th scope="col">Lastname:</th>
+                   <th scope="col">Gender:</th>
+                   <th scope="col">Speciality:</th>
+               </tr>
+           </thead>
+           <tbody>
+               <tr ng-repeat="doctor in doctors">
+                    <td>{{doctor.user}}</td>
+                    <td>{{doctor.firstname}}</td>
+                    <td>{{doctor.lastname}}</td>
+                    <td>{{doctor.gender}}</td>
+                    <td>{{doctor.speciality}}</td>
+               </tr>
+           </tbody>
+        </table>
+        <button class="btn btn-dark" ng-click="Doctorsheet()">Doctors</button>
+    </div>
+
+</body>
+</html>

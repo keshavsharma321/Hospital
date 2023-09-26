@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Dashboard</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        #openSidebarBtn {
+            font-size: 30px;
+            cursor: pointer;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="mySidebar" class="sidebar">
+      <li ng-repeat="panel in panels">
+         <i class=" {{panel.icon}}"></i>
+        <a href="" ng-click="handleHeadingClick(panel.id)"> {{panel.icon}} {{panel.Heading}}</a>
+</li>
+    </div>
+
+      
+    <div id="main">
+        <span id="openSidebarBtn" ng-click="openSidebar()">&#9776;</span>
+        <h1 style="text-align: center; margin-top: 30px">{{pageTitle}}</h1>
+        <div ng-show="showDashboardContent">
+          <h1>Doctor Details</h1>
+    
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Username: </th>
+                <th scope="col">Firstname:</th>
+                <th scope="col">Lastname:</th>
+                <th scope="col">Gender:</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="doctor in doctors">
+                <td>{{ doctor.username }}</td>
+                <td>{{ doctor.firstname }}</td>
+                <td>{{ doctor.lastname }}</td>
+                <td>{{ doctor.gender }}</td>
+              </tr>
+            </tbody>
+          </table>
+             </div>
+            </div>
+        </div>
+        <div ng-show="showAppointmentsContent" style="margin-left: 100px; " >
+          <br>
+          <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Appointment ID</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Age</th>
+                <th scope="col">Problem</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="appointment in appointments">
+                <td>{{ appointment.id }}</td>
+                <td>{{ appointment.firstname }}</td>
+                <td>{{ appointment.lastname }}</td>
+                <td>{{ appointment.Age }}</td>
+                <td>{{ appointment.problem }}</td>
+                <td>{{ appointment.gender }}</td>
+                <td>
+                  
+                  <button type="button" class="btn btn-dark" ng-click="deleteAppointment(appointment.id)">Delete</button>
+                  <button type="button" class="btn btn-dark" ng-click="editAppointment(appointment.id)">Edit</button>
+                  <button type="button" class="btn btn-dark" ng-click="Prescription(appointment.id)">Prescription</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" class="btn btn-dark" ng-click="addAppointment(appointment.id)">Add Appointment</button>  
+        </div>
+          
+<div ng-show="showPatientsContent" style="margin-left: 50px; margin-right:50px ;"> 
+  <br>
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Username: </th>
+        <th scope="col">Firstname:</th>
+        <th scope="col">Lastname:</th>
+        <th scope="col">Gender:</th>
+        <th scope="col">Age:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="person in peopleData">
+        <td>{{ person.username }}</td>
+        <td>{{ person.firstname }}</td>
+        <td>{{ person.lastname }}</td>
+        <td>{{ person.gender }}</td>
+        <td>{{person.Age}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+      
+
+ 
+</body>
+</html>

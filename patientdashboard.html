@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <script src="./node_modules/angular/angular.min.js"></script>
+    <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
+    <style>
+      .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+
+      .sidebar a {
+        padding: 15px 25px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidebar a:hover {
+        color: #f1f1f1;
+      }
+
+      #openSidebarBtn {
+        font-size: 30px;
+        cursor: pointer;
+        position: fixed;
+        left: 20px;
+        top: 20px;
+      }
+
+      #main {
+        transition: margin-left 0.5s;
+        padding: 16px;
+      }
+    </style>
+  </head>
+  <body ng-app="myApp" ng-controller="myCtrl">
+    <div id="mySidebar" class="sidebar">
+      <a href="" ng-click="showDashboard()"> Dashboard</a>
+      <a href="" ng-click="showAppointments()">Appointments</a>
+    </div>
+
+    <div id="main">
+      <span id="openSidebarBtn" ng-click="openSidebar()">&#9776;</span>
+      <h1 style="text-align: center; margin-top: 30px">{{pageTitle}}</h1>
+      <div ng-show="showDashboardContent">
+        <h1>Patient Details</h1>
+
+        <div ng-repeat="user in users">
+          <h2>Welcome, {{ user.firstname }} {{ user.lastname }}</h2>
+          <p><strong>Username:</strong> {{ user.username }}</p>
+          <p><strong>Age:</strong> {{ user.Age }}</p>
+          <p><strong>Gender:</strong> {{ user.gender }}</p>
+        </div>
+      </div>
+    </div>
+<div ng-show="showAppointmentsContent">
+      <div style="display: flex; margin-top: 80px">
+        <div class="form-group" style="margin-left: 100px">
+          <label for="exampleInputmedicalissue">Medical Issue</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputmedicalissue"
+            ng-model="medicalIssue"
+            placeholder="Medical Issue"
+          />
+        </div>
+        <div class="form-group" style="margin-left: 100px">
+          <label for="exampleInputmedicalhistory">Medical History</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputmedicalhistory"
+            ng-model="medicalHistory"
+            placeholder="Medical history"
+          />
+        </div>
+        <div class="form-group" style="margin-left: 100px">
+          <label for="exampleInputdate">Date</label>
+          <input
+            placeholder="Year-Month-Date"
+            class="form-control"
+            id="exampleInputdate"
+            ng-model="date"
+            placeholder="Date"
+          />
+        </div>
+      </div>
+
+      <div style="display: flex; margin-top: 50px">
+        <div style="margin-left: 100px">
+          <label for="exampleInputtime">Time</label><br />
+          <select
+            ng-model="selectedTime"
+            ng-options="time.Time for time in Times"
+          >
+            <option value="">Select an Appointment Time</option>
+          </select>
+        </div>
+
+        <div style="margin-left: 140px; margin-top: 30px">
+          <label for="departmentDropdown">Select Department:</label>
+          <select
+            id="departmentDropdown"
+            ng-model="selectedDepartment"
+            ng-options="department.department for department in departments"
+            ng-change="getDoctors()"
+          >
+            <option value="">Select Department</option>
+          </select>
+
+          <label for="doctorDropdown">Select Doctor:</label>
+          <select id="doctorDropdown" ng-model="selectedDoctor">
+            <option value="">Select Doctor</option>
+            <option ng-repeat="doctor in doctors" value="{{ doctor.id }}">
+              {{ doctor.firstname }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        style="margin-left: 550px; margin-top: 80px"
+        ng-click="bookAppointment()"
+      >
+        Book My Appointment
+      </button>
+    </div>
+  </body>
+</html>

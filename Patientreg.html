@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="shortcut icon" href="#" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script src="./node_modules/angular/angular.min.js"></script>
+  <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+  <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
+  <script src="hos.js"></script>
+  <link
+    rel="stylesheet"
+    href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+  />
+  <style>
+    /* @import "./node_modules/bootstrap/dist/css/bootstrap.min.css"; */
+
+    body {
+      background-color: rgb(130, 170, 165);
+    }
+    #img {
+      height: 600px;
+      width: 455px;
+      margin-top: 25px;
+      margin-left: 80px;
+    }
+    #details {
+      margin-top: 25px;
+      height: 600px;
+      width: 680px;
+      background-color: whitesmoke;
+    }
+  </style>
+  <body>
+    <div style="display: flex">
+      <div>
+        <image
+          id="img"
+          src="https://imgs.search.brave.com/t_as3Y-3PLTmMumyoavJiP44WgqG3v8Z7bv1-zEhAI4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/dmVyeXdlbGxoZWFs/dGguY29tL3RobWIv/NERHTHY3OXVaNzBK/c1JFZlI0ZFNTdjI0/TmRrPS80MDB4MjUw/L2ZpbHRlcnM6bm9f/dXBzY2FsZSgpOm1h/eF9ieXRlcygxNTAw/MDApOnN0cmlwX2lj/YygpL0dldHR5SW1h/Z2VzLTg4MTYwMzE1/LTU2NjgyMmJlM2Rm/NzhjZTE2MTA3Y2Y4/Mi5qcGc"
+        ></image>
+      </div>
+      <div id="details">
+        <h4 style="text-align: center; margin-top: 5px">Registration</h4>
+        <br />
+        <div style="margin-left: 30px; margin-right: 30px">
+          <form name="registerForm" id="form" novalidate>
+            <div style="display: flex">
+              <div class="form-group">
+                <label>User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="UserName"
+                  id="name"
+                  required
+                  ng-model="user.name"
+                  style="width: 170px"
+                />
+              </div>
+              <div class="form-group" style="margin-left: 55px">
+                <label>Firstname</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="First Name"
+                  id="firstname"
+                  required
+                  ng-model="user.firstname"
+                  style="width: 170px"
+                />
+              </div>
+              <div class="form-group" style="margin-left: 55px">
+                <label>Lastname</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Last Name"
+                  id="lastname"
+                  required
+                  ng-model="user.lastname"
+                  style="width: 170px"
+                />
+              </div>
+            </div>
+            <br />
+            <div style="display: flex">
+              <div class="form-group" style="width: 280px">
+                <label for="exampleInputPassword1">Age</label>
+                <input
+                  min="0"
+                  type="number"
+                  class="form-control"
+                  placeholder="Age"
+                  id="age"
+                  required
+                  ng-model="user.age"
+                />
+              </div>
+              <div style="display: flex; margin-top: 30px; margin-left: 55px">
+                <label>Gender</label>
+                <div class="form-check" style="margin-left: 20px">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="gender"
+                    name="flexRadioDefault"
+                    required
+                    ng-model="user.gender"
+                    value="male"
+                  />
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check" style="margin-left: 20px">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="flexRadioDefault"
+                    ng-model="user.gender"
+                    id="gender"
+                    value="female"
+                    required
+                    checked
+                  />
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    Female
+                  </label>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Enter email"
+                id="email"
+                pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
+                required
+                ng-model="user.email"
+              />
+              <small id="emailHelp" class="form-text text-muted"
+                >We'll never share your email with anyone else.</small
+              >
+            </div>
+            <br />
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                id="password"
+                required
+                ng-model="user.password"
+              />
+            </div>
+            <br />
+            <div class="form-group">
+              <label for="exampleInputPassword1">Confirm Password</label>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Confirm Password"
+                id="confirmpassword"
+                required
+                ng-model="user.confirmpassword"
+              />
+            </div>
+            <br />
+            <div style="margin-left: 260px">
+              <button
+                type="submit"
+                style="background-color: rgb(130, 170, 165)"
+                class="btn btn"
+                ng-click="registerP()"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+          <h6 style="margin-top: 15px; margin-left: 155px">
+            Already registered. Click here
+            <a ui-sref="Plogin" style="color: rgb(130, 170, 165)">Login</a>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

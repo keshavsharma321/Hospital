@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="./node_modules/angular/angular.min.js"></script>
+<script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+<script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
+
+  <script src="hos.js"></script>
+  <link
+    rel="stylesheet"
+    href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+  />
+<body ><div style="position: fixed; width: 1200;">
+    <div style="height:100px; background-color: white; display: flex;width: 1500px">
+
+        <div >
+            <image style="height: 100px; width: 150px;" src="https://imgs.search.brave.com/5pRkD8t_OoNl835g-JTPwDk_hbed7QKWnYriSWSVZ40/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTE5/ODczMTY5OS92ZWN0/b3IvY2xpbmljLWFu/ZC1ob3NwaXRhbC1s/b2dvLWRlc2lnbi12/ZWN0b3IuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPUUzUi05/cFpia2p4S2w0eHpO/WGM2S1ljTHB6RTc0/SnJOOFFXZ0FZZ1M2/cXc9"></image>
+        </div>
+        <div>
+            <h6 style="color: black; margin-top: 35px; margin-left: 20px;">MYCHART</h6>
+        </div>
+        <div>
+            <h6 style="color: black; margin-top: 35px; margin-left: 40px;">SCHEDULE AN APPOINTMENT</h6>
+        </div>
+        <div>
+            <h6 style="color: black; margin-top: 35px; margin-left: 40px;">GIVING</h6>
+        </div>
+        <div>
+            <h6 style="color: black; margin-top: 35px; margin-left: 40px;">CAREERS</h6>
+        </div>
+        <div>
+            <h6 style="color: black; margin-top: 35px; margin-left: 40px;">NEWSROOM</h6>
+        </div>
+        <div>
+            <h6 style="color: black; margin-top: 35px; margin-left: 40px;">SCHEDULE AN APPOINTMENT</h6>
+        </div>
+        <div>
+            <h6 style="color: black; margin-top: 35px; margin-left: 40px;">CONTACT US</h6>
+        </div>
+
+    </div>
+    <div style="height: 60px; background-color: rgb(49, 49, 105); display: flex;">
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 80px;">Find a Doctor</h6>
+        </div>
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">Our Locations</h6>
+        </div>
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">Services</h6>
+        </div>
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">Patients and Visitors</h6>
+        </div>
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">Students and Residents</h6>
+        </div>
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">Health Club</h6>
+        </div>
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">Patients Review</h6>
+        </div>
+        <div>
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">HODs</h6>
+        </div>
+    </div>
+    </div>
+    <div>
+        <image style="width:1316px ; height:650px" src="https://cdn.dribbble.com/userupload/4295917/file/original-ec80f02f7532b5f8afd04431e4a36cd5.jpg?resize=1200x1200"></image>
+    </div>
+    <div style="height: 50px;">
+        <h1 style="color:  rgb(49, 49, 105) ; text-align: center; margin-top: 40px;">Sinai Health System is an equal opportunity employer</h1>
+    </div>
+    <div style="height: 0px;">
+        <h1 style="color:  rgb(49, 49, 105) ; text-align: center; margin-top: 10px;">(eoe)</h1>
+    </div>
+    <div style="text-align: center; margin-top: 80px; margin-left: 180px; margin-right: 180px;" >
+        Sinai Health System is an equal opportunity employer (eoe), committed to the policy of providing unbiased opportunities for training, compensation, transfer, promotion and other aspects of employment for all qualified applicants and employees without regard to sex, race, color, religion, national origin, age, disability, sexual orientation, gender identity or veteran status. Sinai Health System is committed to working with and providing reasonable accommodation to individuals with disabilities. If, because of a medical condition or disability, a prospective employee requires some reasonable accommodation for any part of the employment process, Sinai will make every effort to help. Simply let us know the nature of your request and your contact information.
+    </div>
+    <div style="display: flex; margin-top: 50px;">
+        <div><image style="height: 400px; width: 450px;" src="https://cdn.dribbble.com/userupload/3914892/file/original-4cdc26f00cacdc4ba807754bf4f43117.png?resize=1200x900"></image></div>
+        <div><image style="height: 350px; width: 450px; margin-top: 40px;" src="https://cdn.dribbble.com/userupload/9622017/file/original-c51811f150bffaebc45f987a489761ca.jpg?resize=1200x800"></image></div>
+        <div><image style="height: 400px; width: 400px;" src="https://cdn.dribbble.com/users/3956545/screenshots/16814188/media/3596c7394a64b20eafd85d1055d3f623.jpg?resize=768x576&vertical=center"></image></div>
+    </div>
+    
+    <div style="display:flex" ng-app="myApp" ng-controller="HospitalController">
+        <div id="patient register" ng-submit="Patient()">
+         <image style="margin-top: 60px; margin-left: 150px; height: 350px;" src="https://imgs.search.brave.com/Acia7zHSHogCYf1Ue-5ez4LDn1LTB0T_SprLudSdlPk/rs:fit:500:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAwLzg3LzgwLzkw/LzM2MF9GXzg3ODA5/MDcwX2FWNUNYVGVD/akZCNmRPZjVjYXdL/Tlp4VlczM0U0aWxW/LmpwZw"></image><br><br>
+         <button style="margin-left:300px ; margin: top 30px; color: white; background-color:  rgb(49, 49, 105)" type="submit" class="btn btn" ng-click="Patient()">Patient</button>
+        </div>
+        <div id="doctor register" ng-submit="Staff()">
+             <image style="height: 390px; margin-left: 150px;  ;" src="https://imgs.search.brave.com/NNtlhLYycj2m-Ep6V_mNbMe_cItEuFl79EiNXIOlzkc/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuYWxsLWZyZWUt/ZG93bmxvYWQuY29t/L2ltYWdlcy9ncmFw/aGljbGFyZ2UvbWFs/ZV9kb2N0b3JfaWNv/bl9jdXRlX2NhcnRv/b25fY2hhcmFjdGVy/X3NrZXRjaF82OTI3/OTUzLmpwZw"></image><br><br><br>
+             <button style="margin-left:320px ; margin: top 60px; background-color: rgb(49, 49, 105)  ; color: white; " type="submit" class="btn btn" ng-click="Staff()">Staff</button>
+        </div>
+    </div>
+
+    <div style="height: 120px; background-color:  rgb(49, 49, 105); margin-top: 80px; display: flex;">
+        <div style="width: 200px; margin-left: 20px;">
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">Patients and Visitors
+
+                Find a Doctor
+                Our Locations
+                Services
+                Sinai Medical Group</h6>
+        </div>
+        <div style="width: 200px; margin-left: 320px;">
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">
+            Students and Residents
+            
+                Residency Programs
+                Careers
+                Volunteering</h6>
+        </div>
+        <div style="width: 200px; margin-left: 320px;">
+            <h6 style="color: white; margin-top: 20px; margin-left: 40px;">
+                About Us
+
+                Notice of Non-Discrimination
+                Visiting Hours Policy</h6>
+        </div>
+</body>
+</html>

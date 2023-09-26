@@ -1,0 +1,22 @@
+{
+  "name": "arpit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@uirouter/angularjs": "^1.1.0",
+    "angular": "^1.8.2",
+    "angular-font-awesome": "^3.1.2",
+    "angular-ui-router": "^1.0.30",
+    "bootstrap": "^5.3.1",
+    "sweetalert2": "^11.7.28",
+    "ui-router": "^1.0.0-alpha.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {},
+  "description": ""
+}
