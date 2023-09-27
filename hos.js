@@ -513,8 +513,7 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
     $scope.showDashboardContent = false;
     $scope.showAppointmentsContent = true;
     $scope.Prescription = function (id) {
-      console.log("Heading clicked. ID:", id);
-      var url = "https://10.21.87.196:8000//?id=" + id;
+      var url = "https://10.21.87.196:8000/prescriptiondata/?id=" + id;
 
       $http({
         method: "GET",
@@ -526,7 +525,7 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
       }).then(
         function (Response) {
           $scope.prescriptions = Response.data;
-          console.log("ID sent successfully", Response.data);
+          console.log($scope.prescriptions);
           $state.go("Prescription");
         },
         function (Error) {
@@ -801,45 +800,37 @@ myApp.controller("Rcontroller", function ($scope, $http) {
   };
 });
 
-myApp.controller("Prescribecontroller", function ($scope) {
-  $scope.rows = [];
+myApp.controller("Prescribecontroller", function ($scope, $http) {
+  $scope.medicines = [{}];
+ 
+  
 
-  $scope.addRow = function () {
-    $scope.rows.push({
-      medicine: "",
-      doses: "",
-      instruction: "",
-    });
+  $scope.addMedicine = function () {
+    $scope.medicines.push({});
   };
 
-  $scope.removeRow = function (index) {
-    $scope.rows.splice(index, 1);
-  };
+  $scope.submitPrescription = function () {
+   
 
-  $scope.submit = function () {
     var prescriptionData = {
-      medicine: $scope.row.medicine,
-      doses: $scope.row.doses,
-      instruction: $scope.row.instruction,
+        medicines: $scope.medicines,
     };
     console.log(prescriptionData);
 
     $http({
-      method: "POST",
-      url: "https://10.21.87.196:8000//",
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: prescriptionData,
+        method: "POST",
+        url: "https://10.21.87.196:8000/prescription/",
+        withCredentials: true,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        data: prescriptionData,
     })
-      .then(function (response) {
-        console.log("Patient Prescribed successfully: " + response.data);
-        Swal.fire("Patient Prescribed !", "success");
-      })
-      .catch(function (error) {
-        console.error("Error: " + error);
-        Swal.fire("Sorry!", "Try Again!");
-      });
-  };
+    .then(function (response) {
+        console.log("Prescription sent successfully");
+    })
+    .catch(function (error) {
+        console.error("Error sending prescription: " + error);
+    });
+};
 });

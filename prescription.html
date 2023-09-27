@@ -1,142 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
-    />
-    <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
-    <script src="./node_modules/angular/angular.js"></script>
-    <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
-    <script src="hos.js"></script>
-    <style>
-      #Medicine {
-        margin-top: 50px;
-        margin-left: 180px;
-      }
-      #image {
-        height: 120px;
-        width: 200px;
-        margin-left: 10px;
-      }
-      #ima {
-        height: 120px;
-        width: 200px;
-        margin-left: 97px;
-      }
-    </style>
-  </head>
-  <body>
-    
-    <div><image style="margin-left: 550px;" id="ima" src="https://imgs.search.brave.com/9bdsVssqE9slyLgHWFq7sm5cghzEQMXed_ApNj9eLLQ/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jbGlw/YXJ0LWxpYnJhcnku/Y29tL2ltYWdlcy9r/YzhvZGc4OWkuanBn"></image></div>
- 
-    
-<br /> <div style="display: flex; ">
-<div ng-repeat="prescription in prescriptions">
-      <h3 style="margin-left: 30px">Patients Details</h3>
-      <br />
-      <form style="margin-left: 30px">
-        <div class="form-group">
-          <label for="exampleInputEmail1">First Name :</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleInputFirstname"
-            aria-describedby="firstnameHelp"
-            placeholder="Enter Firstname"
-            style="width: 400px"
-            
-            value="{{prescription.firstname}}"
-          />
-          <!-- <input type="text"
-          class="form-control"
-          id="exampleInputFirstname"
-          aria-describedby="firstnameHelp"
-          placeholder="Enter Firstname"
-          style="width: 400px">{{prescription.firstname}}</input> -->
-        </div>
-        <br />
-        <div class="form-group">
-          <label for="exampleInputEmail1">Last Name :</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleInputLastname"
-            aria-describedby="lastnameHelp"
-            placeholder="Enter Lastname"
-            style="width: 400px"
-            value="{{prescription.lastname}}"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <label for="exampleInputGender">Gender :</label>
-          <input
-            type="text"
-            class="form-control"
-            id="exampleInputGender"
-            placeholder="Gender"
-            style="width: 400px"
-            value="{{prescription.Gender}}"
-          />
-        </div>
-        <br />
-        <div class="form-group">
-          <label for="exampleInputAge">Age :</label>
-          <input
-            class="form-control"
-            id="exampleInputAge"
-            placeholder="Age"
-            style="width: 400px"
-            value="{{prescription.Age}}"
-          />
-        </div>
-      </form>
-      </div>
-      <div>
-        
-
-        <div style="margin-left: 350px;">
-            <button class="btn btn-dark" ng-click="addRow()">Add Medicines</button>
-          </div>
-            <br>
-          <div ng-repeat="row in rows" style="display: flex; margin-left: 50px;" >
-            <div class="form-group">
-              <label for="medicine{{$index}}">Medicine:</label>
-              <input  class="form-control" type="text" id="medicine{{$index}}" ng-model="row.medicine" />
-            </div>
-            <div class="form-group">
-              <label for="doses{{$index}}">Doses:</label>
-              <input  class="form-control" type="text" id="doses{{$index}}" ng-model="row.doses" />
-            </div>
-            <div class="form-group">
-              <label for="instruction{{$index}}">Instruction:</label>
-              <input
-                type="text"
-                 class="form-control"
-                id="instruction{{$index}}"
-                ng-model="row.instruction"
-              />
-            </div>
-            <button style="height: 38px; margin-top: 24px; margin-left: 15px;" class="btn btn-dark" ng-click="removeRow($index)">Remove</button>
-          </div>
-
-
-
-
-      </div>
-      <div>
-
-      </div>
-    </div>
-    <br>
-    <br>
-    <button style="margin-left: 600px; margin-top: 5px;" class="btn btn-dark" ng-click="submit()">Submit</button>
-    <br>
-    
-   
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./node_modules/angular/angular.min.js"></script>
+  <script src="./node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="hos.js"></script>
+  <link
+    rel="stylesheet"
+    href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+  />
+</head>
+<body>
+  
+  
+</body>
 </html>
