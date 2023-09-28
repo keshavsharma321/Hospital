@@ -9,6 +9,7 @@
     <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
     <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
         .sidebar {
             height: 100%;
@@ -55,7 +56,7 @@
     <div id="mySidebar" class="sidebar">
       <li ng-repeat="panel in panels">
          <i class=" {{panel.icon}}"></i>
-        <a href="" ng-click="handleHeadingClick(panel.id)">{{panel.Heading}}</a>
+        <a href="" ng-click="handleHeadingClick(panel.id)">{{panel.heading}}</a>
 </li>
     </div>
 
@@ -107,14 +108,63 @@
                 <td>{{ appointment.id }}</td>
                 <td>{{ appointment.firstname }}</td>
                 <td>{{ appointment.lastname }}</td>
-                <td>{{ appointment.Age }}</td>
+                <td>{{ appointment.age }}</td>
                 <td>{{ appointment.problem }}</td>
                 <td>{{ appointment.gender }}</td>
                 <td>
                   
                   <button type="button" class="btn btn-dark" ng-click="deleteAppointment(appointment.id)">Delete</button>
                   <button type="button" class="btn btn-dark" ng-click="editAppointment(appointment.id)">Edit</button>
-                  <button type="button" class="btn btn-dark" ng-click="Prescription(appointment.id)">Prescription</button>
+
+                   
+                 
+                   
+                    <button type="button" onclick="document.getElementById('id01').style.display='block'" class="btn btn-dark" ng-click="Prescription(appointment.id)()">Prescription</button>
+                  
+                    <div id="id01" class="w3-modal">
+                      <div class="w3-modal-content w3-card-4" style="width: 1100px;">
+                        <header class="modal-header"> 
+                          <span onclick="document.getElementById('id01').style.display='none'" 
+                          class="w3-button w3-display-topright">&times;</span> 
+                        </header><br>
+                        <h3 style="margin-left: 30px;"><b>Patient's Details</b></h3>
+                          <div style="display: flex;">
+                        <div style="margin-left: 30px;" ng-repeat="prescription in prescriptions">
+                          <label>Appointment ID:</label> <input style="width:300px" class="form-control"  value="{{prescription.id}}"  placeholder="Enter ID"><br>
+                          <label>FirstName:</label><input type="text" style="width:300px" class="form-control"  value="{{prescription.firstname}}"  placeholder="Enter Firstname"><br>
+                          <label>LastName:</label><input type="text" style="width:300px" class="form-control"  value="{{prescription.lastname}}"  placeholder="Enter LastName"><br>
+                          <label>Age:</label><input type="text" style="width:300px" class="form-control"  value="{{prescription.age}}"  placeholder="Enter Age"><br>
+                          <label>Gender:</label><input type="text" style="width:300px" class="form-control"  value="{{prescription.gender}}"  placeholder="Enter Gender">
+                          </div>
+                        <div class="w3-container">
+                          <table>
+                            <thead>
+                                <tr>
+                                    <th>Medicine</th>
+                                    <th>Dose</th>
+                                    <th>Instructions</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="med in medicines">
+                                    <td><input style="width:200px" class="form-control" type="text" ng-model="med.name" /></td>
+                                    <td><input style="width:200px" class="form-control"  type="text" ng-model="med.dose" /></td>
+                                    <td><input style="width:200px" class="form-control"  type="text" ng-model="med.instructions" /></td>
+                                    <td><button class="btn btn-dark" ng-click="removeMedicine($index)">Remove</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-dark" ng-click="addMedicine()">Add Medicine</button>
+                        </div>
+                        </div>
+                        <footer class="modal-header">
+                          <button type="button" ng-click="Submit(appointment.id)()" style="margin-left: 500px; " class="btn btn-dark">Submit</button>
+                        </footer><br>
+                      </div>
+                    </div>
+                  
+                   
                 </td>
               </tr>
             </tbody>

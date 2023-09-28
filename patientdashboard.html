@@ -11,6 +11,9 @@
     <script src="./node_modules/angular/angular.min.js"></script>
     <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
     <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
+    <script src=
+    "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js">
+        </script>
     <style>
       .sidebar {
         height: 100%;
@@ -54,21 +57,31 @@
   </head>
   <body ng-app="myApp" ng-controller="myCtrl">
     <div id="mySidebar" class="sidebar">
-      <a href="" ng-click="showDashboard()"> Dashboard</a>
-      <a href="" ng-click="showAppointments()">Appointments</a>
+      <li ng-repeat="panel in panels">
+         <i class=" {{panel.icon}}"></i>
+        <a href="" ng-click="handleHeadingClick(panel.id)">{{panel.heading}}</a>
+</li>
     </div>
 
     <div id="main">
       <span id="openSidebarBtn" ng-click="openSidebar()">&#9776;</span>
       <h1 style="text-align: center; margin-top: 30px">{{pageTitle}}</h1>
       <div ng-show="showDashboardContent">
-        <h1>Patient Details</h1>
+       
 
         <div ng-repeat="user in users">
-          <h2>Welcome, {{ user.firstname }} {{ user.lastname }}</h2>
-          <p><strong>Username:</strong> {{ user.username }}</p>
-          <p><strong>Age:</strong> {{ user.Age }}</p>
-          <p><strong>Gender:</strong> {{ user.gender }}</p>
+          <h1 style="margin-left: 100px; margin-top: 40px; font-size: 50px;">Welcome {{ user.firstname }} {{ user.lastname }}</h1><br><br>
+          <div style="display: flex;">
+          <div style="margin-left: 300px;">
+          <label style="font-size: 30px;">FirstName:</label><input type="text" style="width:300px" class="form-control"  value="{{user.firstname}}"  placeholder="Enter Firstname"><br><br>
+          <label style="font-size: 30px;">LastName:</label><input type="text" style="width:300px" class="form-control"  value="{{user.lastname}}"  placeholder="Enter LastName"><br><br>
+          <label style="font-size: 30px;">Age:</label><input type="text" style="width:300px" class="form-control"  value="{{user.age}}"  placeholder="Enter LastName"><br>
+          </div>
+          <div style="margin-left: 120px;">
+            <label style="font-size: 30px;">Username:</label><input type="text" style="width:300px" class="form-control"  value="{{user.username}}"  placeholder="Enter Firstname"><br><br>
+            <label style="font-size: 30px;">Gender:</label><input type="text" style="width:300px" class="form-control"  value="{{user.gender}}"  placeholder="Enter LastName"><br><br>
+            </div>
+            </div>
         </div>
       </div>
     </div>
@@ -111,7 +124,7 @@
           <label for="exampleInputtime">Time</label><br />
           <select
             ng-model="selectedTime"
-            ng-options="time.Time for time in Times"
+            ng-options="time.time for time in Times"
           >
             <option value="">Select an Appointment Time</option>
           </select>
@@ -146,6 +159,33 @@
       >
         Book My Appointment
       </button>
+    </div>
+    <div ng-show="showPrescriptionsContent" >
+      <div id="makepdf" style="border: 2px solid black; height: 560px; width: 600px; margin-left: 350px; margin-top: -20px;">
+      <div><image style="height:100px;width:150px; margin-left: 220px;" src="https://imgs.search.brave.com/9bdsVssqE9slyLgHWFq7sm5cghzEQMXed_ApNj9eLLQ/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jbGlw/YXJ0LWxpYnJhcnku/Y29tL2ltYWdlcy9r/YzhvZGc4OWkuanBn"></image></div>
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th >Appointment: </th>
+              <th >Medicine:</th>
+              <th >Dose:</th>
+              <th >Instruction:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in users">
+              <td>{{ user.appointment }}</td>
+              <td>{{ user.medicine_name }}</td>
+              <td>{{ user.dosage}}</td>
+              <td>{{ user.instruction }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top: 200px;"><b></b></div>
+      </div>
+      </div>
+      <button id="button" style="margin-left: 590px; margin-top: 10px;" type="button" ng-click="download()" class="btn btn-dark">Downlaod</button>
     </div>
   </body>
 </html>
