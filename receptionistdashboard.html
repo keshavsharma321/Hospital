@@ -144,7 +144,7 @@
                  <td>{{patient.firstname}}</td>
                  <td>{{patient.lastname}}</td>
                  <td>{{patient.gender}}</td>
-                 <td>{{patient.Age}}</td>
+                 <td>{{patient.age}}</td>
             </tr>
         </tbody>
        
@@ -176,6 +176,55 @@
            </tbody>
         </table>
         <button class="btn btn-dark" ng-click="Doctorsheet()">Doctors</button>
+    </div>
+    <div ng-show="showPaymentsContent" style="margin-left: 100px;">
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Appointment ID</th>
+                    <th scope="col">FirstName</th>
+                    <th scope="col">LastName</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Gender</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.problem }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>
+                        <button type="button" class="btn btn-dark" onclick="document.getElementById('id01').style.display='block'" ng-click="Initiated(user.id)">Payment Initiated</button>
+                                          
+                    <div id="id01" class="w3-modal">
+                        <div class="w3-modal-content w3-card-4" style="width:400px;">
+                          <header class="modal-header"> 
+                            <span onclick="document.getElementById('id01').style.display='none'" 
+                            class="w3-button w3-display-topright">&times;</span> 
+                          </header><br>
+                        
+                        
+                          <div class="w3-container">
+                            
+                          <label><b>Amount to be paid :</b></label><input style="width:300px" class="form-control" ng-model="users.payment" placeholder="Enter Amount"><br>
+                          </div>
+                          
+                            <button type="button"  ng-click="Submit(user.id)()" style="margin-left: 150px;" class="btn btn-dark">Submit</button><br>
+                          <br>
+                        </div>
+                      </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </body>

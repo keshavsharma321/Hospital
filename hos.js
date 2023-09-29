@@ -377,6 +377,7 @@ myApp.controller("Pdashboardcontroller", [
     $scope.showDashboardContent = false;
     $scope.showAppointmentsContent = false;
     $scope.showPrescriptionsContent = false;
+    $scope.showPaymentContent = false;
 
     $scope.closeSidebar = function () {
       document.getElementById("mySidebar").style.width = "0";
@@ -423,6 +424,8 @@ myApp.controller("Pdashboardcontroller", [
             $scope.showAppointments();
           } else if (Response.data.message === "Prescription") {
             $scope.showPrescription();
+          } else if (Response.data.message === "Payment/Bill") {
+            $scope.showPayments();
           } else {
             console.error("error in response");
           }
@@ -454,6 +457,7 @@ myApp.controller("Pdashboardcontroller", [
       $scope.showDashboardContent = true;
       $scope.showAppointmentsContent = false;
       $scope.showPrescriptionsContent = false;
+      $scope.showPaymentContent = false;
       $scope.closeSidebar();
     };
 
@@ -462,6 +466,7 @@ myApp.controller("Pdashboardcontroller", [
       $scope.showDashboardContent = false;
       $scope.showAppointmentsContent = true;
       $scope.showPrescriptionsContent = false;
+      $scope.showPaymentContent = false;
 
       $scope.getDepartments = function () {
         $http
@@ -577,6 +582,79 @@ myApp.controller("Pdashboardcontroller", [
       $scope.showDashboardContent = false;
       $scope.showAppointmentsContent = false;
       $scope.showPrescriptionsContent = true;
+      $scope.showPaymentContent = false;
+      $scope.closeSidebar();
+    };
+
+    $scope.showPayments = function () {
+      $scope.pageTitle = "Payment/Bill";
+      $http({
+        method: "GET",
+        url: "https://10.21.87.196:8000/billdash/",
+        withCredentials: true,
+      }).then(
+        function (response) {
+          console.log("Fetched Payments Data", response.data);
+          $scope.users = response.data;
+
+          $scope.billAction = function (item) {
+            console.log("Bill button clicked for ID: " + item.id);
+            var pdfId = item.id;
+            $http({
+              method: "GET",
+              url: "https://10.21.87.196:8000/paymentpdf/?id=" + pdfId,
+              withCredentials: true,
+              responseType: "arraybuffer",
+            }).then(
+              function (response) {
+                console.log("Pdf data fetched", response.data);
+
+                var blob = new Blob([response.data], {
+                  type: "application/pdf",
+                });
+                var url = URL.createObjectURL(blob);
+
+                $scope.pdfs = url;
+              },
+              function (error) {
+                console.log("Data not fetched", error);
+              }
+            );
+          };
+
+          $scope.paymentAction = function (item) {
+            console.log("Payment button clicked for ID: " + item.id);
+            var id = { id: item.id };
+            console.log(id);
+            $http({
+              method: "PUT",
+              url: "https://10.21.87.196:8000/payapproval/",
+              withCredentials: true,
+              data: id,
+            }).then(
+              function (response) {
+                console.log("Pdf data fetched", response.data);
+                $scope.pdfs = response.data;
+                if (response.data.message === "Payment Approved") {
+                  Swal.fire("Payment Done!", "success");
+                } else {
+                  Swal.fire("Error");
+                }
+              },
+              function (Error) {
+                console.log("Data not fetched", Error);
+              }
+            );
+          };
+        },
+        function (patientError) {
+          console.error("Failed to fetch Payments data", patientError);
+        }
+      );
+      $scope.showDashboardContent = false;
+      $scope.showAppointmentsContent = false;
+      $scope.showPrescriptionsContent = false;
+      $scope.showPaymentContent = true;
       $scope.closeSidebar();
     };
   },
@@ -771,6 +849,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
   $scope.showDashboardContent = false;
   $scope.showAppointmentsContent = false;
   $scope.showDoctorsContent = false;
+  $scope.showPaymentsContent = false;
 
   $scope.openSidebar = function () {
     document.getElementById("mySidebar").style.width = "250px";
@@ -815,6 +894,8 @@ myApp.controller("Rcontroller", function ($scope, $http) {
           $scope.showPatients();
         } else if (Response.data.message === "Doctors") {
           $scope.showDoctors();
+        } else if (Response.data.message === "Payment/Bill") {
+          $scope.showPayment();
         } else {
           console.error("error in response");
         }
@@ -851,6 +932,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showAppointmentsContent = false;
     $scope.showPatientsContent = false;
     $scope.showDoctorsContent = false;
+    $scope.showPaymentsContent = false;
     $scope.closeSidebar();
   };
 
@@ -907,6 +989,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showAppointmentsContent = true;
     $scope.showPatientsContent = false;
     $scope.showDoctorsContent = false;
+    $scope.showPaymentsContent = false;
     $scope.closeSidebar();
   };
   $scope.showPatients = function () {
@@ -962,6 +1045,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showAppointmentsContent = false;
     $scope.showPatientsContent = true;
     $scope.showDoctorsContent = false;
+    $scope.showPaymentsContent = false;
     $scope.closeSidebar();
   };
   $scope.showDoctors = function () {
@@ -1001,6 +1085,53 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showAppointmentsContent = false;
     $scope.showPatientsContent = false;
     $scope.showDoctorsContent = true;
+    $scope.showPaymentsContent = false;
     $scope.closeSidebar();
+  };
+
+  $scope.showPayment = function () {
+    $scope.pageTitle = "Payment/Bill";
+    $http({
+      method: "GET",
+      url: "https://10.21.87.196:8000/appointpayment/",
+      withCredentials: true,
+    }).then(
+      function (response) {
+        console.log("Fetched Payment Data", response.data);
+        $scope.users = response.data;
+      },
+      function (Error) {
+        console.error("Failed to fetch data", Error);
+      }
+    );
+    $scope.showDashboardContent = false;
+    $scope.showAppointmentsContent = false;
+    $scope.showPatientsContent = false;
+    $scope.showDoctorsContent = false;
+    $scope.showPaymentsContent = true;
+    $scope.closeSidebar();
+
+    $scope.Submit = function (Id) {
+      var amountToPay = $scope.users.payment;
+
+      var Data = {
+        id: Id,
+        payment: amountToPay,
+      };
+
+      $http({
+        method: "POST",
+        url: "https://10.21.87.196:8000/Payment/",
+        withCredentials: true,
+        data: Data,
+      })
+        .then(function (response) {
+          $scope.users.payment = "";
+          console.log("Payment submitted successfully:", response.data);
+        })
+        .catch(function (error) {
+          console.error("Error submitting payment:", error);
+        });
+    };
   };
 });
