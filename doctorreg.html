@@ -27,18 +27,18 @@
       id="main"
       style="
         display: flex;
-        height: 600px;
+        height: 530px;
         width: 1050px;
         background-color: white;
-        margin-left: 150px;
-        margin-top: 28px;
+        margin-left: 130px;
+        margin-top: 60px;
         border-radius: 20px;
       "
     >
       <div
         id="details"
         style="
-          height: 560px;
+          height: 470px;
           background-color: rgb(197, 235, 235);
           width: 620px;
           margin-left: 40px;
@@ -61,7 +61,7 @@
                 class="form-control"
                 placeholder="Name"
                 id="name"
-                ng-model="user.name"
+                ng-model="name"
                 required
               />
             </div>
@@ -72,7 +72,7 @@
                 class="form-control"
                 placeholder="First Name"
                 id="firstname"
-                ng-model="user.firstname"
+                ng-model="firstname"
                 required
               />
             </div>
@@ -83,7 +83,7 @@
                 class="form-control"
                 placeholder="Last Name"
                 id="lastname"
-                ng-model="user.lastname"
+                ng-model="lastname"
                 required
               />
             </div>
@@ -98,7 +98,7 @@
                 aria-describedby="emailHelp"
                 placeholder="Enter email"
                 id="email"
-                ng-model="user.email"
+                ng-model="email"
                 required
               />
               <small id="emailHelp" class="form-text text-muted"
@@ -114,7 +114,7 @@
                   id="gender"
                   name="flexRadioDefault"
                   required
-                  ng-model="user.gender"
+                  ng-model="gender"
                   value="male"
                 />
                 <label class="form-check-label" for="flexRadioDefault1">
@@ -126,7 +126,7 @@
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
-                  ng-model="user.gender"
+                  ng-model="gender"
                   id="gender"
                   value="female"
                   required
@@ -140,10 +140,11 @@
           </div>
           <br />
           <div>
-            Department :
+            <label for="departmentDropdown">Select Department:</label>
             <select
-              ng-model="selectedTime"
-              ng-options="time.department for time in Times"
+              id="departmentDropdown"
+              ng-model="selectedDepartment"
+              ng-options="department.department for department in departments"
             >
               <option value="">Select Department</option>
             </select>
@@ -160,7 +161,7 @@
                 placeholder="Password"
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$"
                 id="password"
-                ng-model="user.password"
+                ng-model="password"
                 required
               />
             </div>
@@ -172,7 +173,7 @@
                 placeholder="Confirm Password"
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$"
                 id="confirmpassword"
-                ng-model="user.confirmpassword"
+                ng-model="confirmpassword"
                 required
               />
             </div>

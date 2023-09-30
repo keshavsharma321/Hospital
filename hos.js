@@ -61,16 +61,7 @@ myApp.controller("HospitalController", [
       $state.go("Pregister");
     };
     $scope.Staff = function () {
-      $http
-        .get("https://10.21.87.196:8000/department/")
-        .then(function (response) {
-          $scope.doctors = response.data;
-          console.log($scope.doctors);
-          $state.go("Dregister");
-        })
-        .catch(function (error) {
-          console.error("Error loading users: " + error);
-        });
+      $state.go("Dregister");
     };
   },
 ]);
@@ -146,27 +137,32 @@ myApp.controller("PatientregController", function ($scope, $state, $http) {
     );
   };
 });
-
 myApp.controller("doctorregController", function ($scope, $state, $http) {
-  $scope.user = {};
+  $http
+    .get("https://10.21.87.196:8000/department/")
+    .then(function (response) {
+      $scope.departments = response.data;
+      console.log($scope.departments);
+    })
+    .catch(function (error) {
+      console.error("Error fetching departments: " + error);
+    });
 
   $scope.registerS = function () {
     if (
-      !$scope.user.name ||
-      !$scope.user.firstname ||
-      !$scope.user.lastname ||
-      !$scope.user.email ||
-      !$scope.user.gender ||
-      !$scope.user.selectedTime ||
-      !$scope.user.password ||
-      !$scope.user.confirmpassword
+      !$scope.name ||
+      !$scope.firstname ||
+      !$scope.lastname ||
+      !$scope.email ||
+      !$scope.password ||
+      !$scope.confirmpassword
     ) {
       Swal.fire({
         title: "Error",
         text: "All fields are required to proceed!!",
         width: 600,
         padding: "3em",
-        color: "#72b9b5",
+        color: "#566c6c",
         background: "#fff url(/images/trees.png)",
         backdrop: `
         rgba(0,0,123,0.4)
@@ -177,10 +173,21 @@ myApp.controller("doctorregController", function ($scope, $state, $http) {
       });
       return;
     }
+    var data = {
+      name : $scope.name,
+      firstname : $scope.firstname,
+      lastname : $scope.lastname,
+      email: $scope.email,
+      gender: $scope.gender,
+      department : $scope.selectedDepartment.id,
+      password : $scope.password,
+      confirmpassword : $scope.confirmpassword,
+    }
+    console.log(data)
     $http({
       method: "POST",
       url: "https://10.21.87.196:8000/staffregister/",
-      data: $scope.user,
+      data: data,
     }).then(
       function (response) {
         console.log("Registration successful", response.data);
@@ -374,7 +381,23 @@ myApp.controller("Pdashboardcontroller", [
   "$http",
   function ($scope, $http) {
     $scope.pageTitle = "";
-    $scope.showDashboardContent = false;
+    $http({
+      method: "GET",
+      url: "https://10.21.87.196:8000/patient/",
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(
+      function (response) {
+        console.log("Fetched Patient Data", response.data);
+        $scope.users = response.data;
+      },
+      function (patientError) {
+        console.error("Failed to fetch patient data", patientError);
+      }
+    );
+    $scope.showDashboardContent = true;
     $scope.showAppointmentsContent = false;
     $scope.showPrescriptionsContent = false;
     $scope.showPaymentContent = false;
@@ -438,22 +461,6 @@ myApp.controller("Pdashboardcontroller", [
 
     $scope.showDashboard = function () {
       $scope.pageTitle = "";
-      $http({
-        method: "GET",
-        url: "https://10.21.87.196:8000/patient/",
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(
-        function (response) {
-          console.log("Fetched Patient Data", response.data);
-          $scope.users = response.data;
-        },
-        function (patientError) {
-          console.error("Failed to fetch patient data", patientError);
-        }
-      );
       $scope.showDashboardContent = true;
       $scope.showAppointmentsContent = false;
       $scope.showPrescriptionsContent = false;
@@ -462,7 +469,7 @@ myApp.controller("Pdashboardcontroller", [
     };
 
     $scope.showAppointments = function () {
-      $scope.pageTitle = "Appointments";
+      $scope.pageTitle = "Appointment";
       $scope.showDashboardContent = false;
       $scope.showAppointmentsContent = true;
       $scope.showPrescriptionsContent = false;
@@ -547,7 +554,7 @@ myApp.controller("Pdashboardcontroller", [
     };
 
     $scope.showPrescription = function () {
-      $scope.pageTitle = "";
+      $scope.pageTitle = "Prescription";
       $http({
         method: "GET",
         url: "https://10.21.87.196:8000/prescriptionpdf/",
@@ -662,7 +669,24 @@ myApp.controller("Pdashboardcontroller", [
 
 myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
   $scope.pageTitle = " ";
-  $scope.showDashboardContent = false;
+  $http({
+    method: "GET",
+    url: "https://10.21.87.196:8000/doctor/",
+    withCredentials: true,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(
+    function (doctorResponse) {
+      console.log("Fetched doctor Data", doctorResponse.data);
+
+      $scope.doctors = doctorResponse.data;
+    },
+    function (doctorError) {
+      console.error("Failed to fetch doctor data", doctorError);
+    }
+  );
+  $scope.showDashboardContent = true;
   $scope.showAppointmentsContent = false;
 
   $scope.openSidebar = function () {
@@ -721,24 +745,7 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
   };
 
   $scope.showDashboard = function () {
-    $scope.pageTitle = "Dashboard";
-    $http({
-      method: "GET",
-      url: "https://10.21.87.196:8000/doctor/",
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(
-      function (doctorResponse) {
-        console.log("Fetched doctor Data", doctorResponse.data);
-
-        $scope.doctors = doctorResponse.data;
-      },
-      function (doctorError) {
-        console.error("Failed to fetch doctor data", doctorError);
-      }
-    );
+    $scope.pageTitle = "";
     $scope.showDashboardContent = true;
     $scope.showAppointmentsContent = false;
     $scope.showPatientsContent = false;
@@ -765,6 +772,110 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
     );
     $scope.showDashboardContent = false;
     $scope.showAppointmentsContent = true;
+    $scope.AcceptAppointment = function (id) {
+      console.log("Payment button clicked for ID: " + id);
+      var id = { id: id };
+      console.log(id);
+      $http({
+        method: "PUT",
+        url: "https://10.21.87.196:8000/docapproval/",
+        withCredentials: true,
+        data: id,
+      }).then(
+        function (response) {
+          console.log(" data fetched", response.data);
+          if (response.data.message === "Appointment approved") {
+            Swal.fire("Appointment Approved!", "success");
+          } else {
+            Swal.fire("Error");
+          }
+        },
+        function (Error) {
+          console.log("Data not fetched", Error);
+        }
+      );
+    };
+
+    $scope.Send = function (id) {
+      console.log(" button clicked for ID: " + id);
+      var id = id;
+      console.log(id);
+      reason = $scope.appointments.reject;
+      console.log(reason);
+      data = {
+        id: id,
+        reason: reason,
+      };
+      console.log(data);
+      $http({
+        method: "PUT",
+        url: "https://10.21.87.196:8000/docreject/",
+        withCredentials: true,
+        data: data,
+      }).then(
+        function (response) {
+          ($scope.appointments.reject = ""),
+            console.log(" data fetched", response.data);
+          if (response.data.message === "Appointment rejected") {
+            Swal.fire("Appointment Rejected!", "Soory");
+          } else {
+            Swal.fire("Error");
+          }
+        },
+        function (Error) {
+          console.log("Data not fetched", Error);
+        }
+      );
+    };
+
+    $scope.editAppointment = function () {
+      $http
+        .get("https://10.21.87.196:8000/schedule/")
+        .then(function (response) {
+          $scope.Times = response.data;
+          console.log($scope.Times);
+        })
+        .catch(function (error) {
+          console.error("Error fetching appointment times: ", error);
+        });
+    };
+
+    $scope.Sent = function (id) {
+      console.log(" button clicked for ID: " + id);
+      $scope.selectedTime = "";
+      var id = id;
+      console.log(id);
+      date = $scope.appointments.reject;
+      console.log(date);
+      var data = {
+        id: id,
+        date: date,
+        time: $scope.selectedTime.id,
+      };
+
+      console.log(data);
+      $http({
+        method: "PUT",
+        url: "https://10.21.87.196:8000/updateappoint/",
+        withCredentials: true,
+        data: data,
+      }).then(
+        function (response) {
+          ($scope.appointments.reject = ""),
+            ($scope.appointments.rejected = ""),
+            console.log(" data fetched", response.data);
+          if (response.data.message === "Updated") {
+            Swal.fire("Appointment Updated!", "Success");
+          } else {
+            Swal.fire("Error");
+          }
+        },
+        function (Error) {
+          console.log("Data not fetched", Error);
+        }
+      );
+    };
+
     $scope.Prescription = function (id) {
       var url = "https://10.21.87.196:8000/prescriptiondata/?id=" + id;
 
@@ -798,18 +909,32 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
     $scope.Submit = function (id) {
       var Id = id;
       console.log(Id);
-
+    
+      var formattedMedicines = [];
+    
       for (var i = 0; i < $scope.medicines.length; i++) {
-        $scope.medicines[i].Id = Id;
+        var medicine = {
+          "Id": Id,
+          "name": $scope.medicines[i].name || "",
+          "dose": $scope.medicines[i].dose || "",
+          "instructions": $scope.medicines[i].instructions || ""
+        };
+        formattedMedicines.push(medicine);
       }
-      console.log($scope.medicines);
+    
+      console.log(formattedMedicines);
+    
       $http({
         method: "POST",
         url: "https://10.21.87.196:8000/prescription/",
         withCredentials: true,
-        medicines: $scope.medicines,
+        data: formattedMedicines, 
       })
         .then(function (response) {
+          $scope.medicines[i].name="",
+          $scope.medicines[i].dose="",
+          $scope.medicines[i].instructions="",
+
           console.log("Data successfully sent to the server:", response.data);
         })
         .catch(function (error) {
@@ -845,8 +970,24 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
 });
 
 myApp.controller("Rcontroller", function ($scope, $http) {
-  $scope.pageTitle = "Welcome Receptionist";
-  $scope.showDashboardContent = false;
+  $scope.pageTitle = "";
+  $http({
+    method: "GET",
+    url: "https://10.21.87.196:8000/reception/",
+    withCredentials: true,
+    header: {
+      "Content-Type": "application/json",
+    },
+  }).then(
+    function (response) {
+      console.log("Receptionist data", response.data);
+      $scope.receptionsit = response.data;
+    },
+    function (Error) {
+      console.log("No Data", Error);
+    }
+  );
+  $scope.showDashboardContent = true;
   $scope.showAppointmentsContent = false;
   $scope.showDoctorsContent = false;
   $scope.showPaymentsContent = false;
@@ -911,23 +1052,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
   };
 
   $scope.showDashboard = function () {
-    $scope.pageTitle = "Receptionist Details";
-    $http({
-      method: "GET",
-      url: "https://10.21.87.196:8000/reception/",
-      withCredentials: true,
-      header: {
-        "Content-Type": "application/json",
-      },
-    }).then(
-      function (response) {
-        console.log("Receptionist data", response.data);
-        $scope.receptionsit = response.data;
-      },
-      function (Error) {
-        console.log("No Data", Error);
-      }
-    );
+    $scope.pageTitle = "";
     $scope.showDashboardContent = true;
     $scope.showAppointmentsContent = false;
     $scope.showPatientsContent = false;
@@ -954,6 +1079,61 @@ myApp.controller("Rcontroller", function ($scope, $http) {
         console.error("Failed to fetch Appointment data", Error);
       }
     );
+
+    $scope.ApproveAppointment = function (id) {
+      console.log("Payment button clicked for ID: " + id);
+      var id = { id: id };
+      console.log(id);
+      $http({
+        method: "PUT",
+        url: "https://10.21.87.196:8000/recepapproval/",
+        withCredentials: true,
+        data: id,
+      }).then(
+        function (response) {
+          console.log(" data fetched", response.data);
+          if (response.data.message === "Appointment approved") {
+            Swal.fire("Appointment Approved!", "success");
+          } else {
+            Swal.fire("Error");
+          }
+        },
+        function (Error) {
+          console.log("Data not fetched", Error);
+        }
+      );
+    };
+    $scope.Submit = function (id) {
+      console.log("Payment button clicked for ID: " + id);
+      var id = id;
+      console.log(id);
+      reason = $scope.appointment.reject;
+      console.log(reason);
+      data = {
+        id: id,
+        reason: reason,
+      };
+      console.log(data);
+      $http({
+        method: "PUT",
+        url: "https://10.21.87.196:8000/recepreject/",
+        withCredentials: true,
+        data: data,
+      }).then(
+        function (response) {
+          ($scope.appointment.reject = ""),
+            console.log(" data fetched", response.data);
+          if (response.data.message === "Appointment rejected") {
+            Swal.fire("Appointment Rejected!", "Soory");
+          } else {
+            Swal.fire("Error");
+          }
+        },
+        function (Error) {
+          console.log("Data not fetched", Error);
+        }
+      );
+    };
     $scope.AppointSheet = function () {
       var csv = " Id,Firstname,Lastname,Gender,Problem,Age\n";
       $scope.appointment.forEach(function (appoint) {

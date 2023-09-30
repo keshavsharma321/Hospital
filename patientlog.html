@@ -15,7 +15,7 @@
   />
   <style>
     body {
-      background-color: rgb(12, 128, 190);
+      background-color: #9f8ff2;
     }
     #info {
       height: 400px;
@@ -27,65 +27,87 @@
     }
   </style>
   <body>
-    <div style="display: flex">
-      <div id="info">
-        <br />
-
-        <h3 style="text-align: center">Welcome Back</h3>
-        <br />
-        <form
-          style="margin-left: 20px; margin-right: 20px"
-          id="form"
-          name="loginform"
-          novalidate
+    <div
+      style="
+        background-color: white;
+        width: 1100px;
+        margin-left: 100px;
+        margin-top: 50px;
+        height: 550px;
+        border: 1px;
+        border-radius: 25px;
+      "
+    >
+      <div
+        style="display: flex"
+        style="height: 800px; width: 600px; background-color: white"
+      >
+        <div
+          id="info"
+          style="margin-top: 60px; margin-left: 30px; border: 2px solid #9f8ff2"
         >
-          <div class="form-group">
-            <h6 for="exampleInputUsername"><b>Username</b></h6>
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              ng-model="user.username"
-              placeholder="Username"
-              required
-            />
-          </div>
           <br />
-          <div class="form-group">
-            <h6 for="exampleInputPassword"><b>Password</b></h6>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              ng-model="user.password"
-              placeholder="Password"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$"
-              required
-            />
-          </div>
-          <br /><br />
-          <div style="margin-left: 155px">
-            <button
-              type="submit"
-              class="btn btn"
-              style="background-color: rgb(12, 128, 190)"
-              ng-click="loginP()"
-            >
-              Login
-            </button>
-          </div>
-        </form>
-        <br />
-        <h6 style="margin-left: 50px">
-          Are You a New Patient. Click here
-          <a ui-sref="Pregister" style="color: rgb(12, 128, 190)">Register</a>
-        </h6>
-      </div>
 
-      <div style="margin-left: 00px; margin-top: 20px">
-        <image
-          src="https://cdn.dribbble.com/users/6259574/screenshots/15446502/media/fd8cc19c5c618bc4a1afb373b61d0002.png"
-        ></image>
+          <h3 style="text-align: center; color: #361a7d">Welcome Back</h3>
+          <br />
+          <form
+            style="margin-left: 20px; margin-right: 20px"
+            id="form"
+            name="loginform"
+            novalidate
+          >
+            <div class="form-group">
+              <h6 style="color: #361a7d" for="exampleInputUsername">
+                <b>Username</b>
+              </h6>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                ng-model="user.username"
+                placeholder="Username"
+                required
+              />
+            </div>
+            <br />
+            <div class="form-group">
+              <h6 style="color: #361a7d" for="exampleInputPassword">
+                <b>Password</b>
+              </h6>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                ng-model="user.password"
+                placeholder="Password"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$"
+                required
+              />
+            </div>
+            <br /><br />
+            <div style="margin-left: 155px">
+              <button
+                type="submit"
+                class="btn btn"
+                style="background-color: #361a7d; color: white"
+                ng-click="loginP()"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+          <br />
+          <h6 style="margin-left: 50px">
+            Are You a New Patient. Click here
+            <a ui-sref="Pregister" style="color: #361a7d">Register</a>
+          </h6>
+        </div>
+
+        <div style="margin-left: 00px; margin-top: 60px">
+          <image
+            src="patient-consults-with-doctor-medical-clinic-flat-design-concept-with-people_9209-4691.avif"
+          ></image>
+        </div>
       </div>
     </div>
   </body>

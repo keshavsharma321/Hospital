@@ -15,22 +15,22 @@
   />
   <style>
     body {
-      background-color: rgba(246, 153, 118, 255);
+      background-color: #6c63ff;
     }
     #info {
-      height: 400px;
+      height: 370px;
       width: 500px;
       margin-top: 110px;
       margin-left: 90px;
-      background-color: antiquewhite;
       border-radius: 30px;
+      background-color: #6c63ff;
     }
   </style>
   <body>
-    <div style="display: flex">
-      <div id="info">
-        <br />
-
+    <div>
+      <div style="background-color: white;display: flex; margin-top: 60px; margin-left: 80px; margin-right: 80px; border-radius: 25px;">
+      <div id="info" style="margin-top: 60px; margin-bottom: 60px; border: 3px solid #3f3d56;">
+        <br>
         <h3 style="text-align: center">Welcome Back</h3>
         <br />
         <form style="margin-left: 20px; margin-right: 20px">
@@ -58,12 +58,12 @@
               required
             />
           </div>
-          <br /><br />
-          <div style="margin-left: 155px">
+          <br />
+          <div style="margin-left: 195px">
             <button
               type="submit"
               class="btn btn"
-              style="background-color: rgba(246, 153, 118, 255)"
+              style="background-color: #3f3d56; color: white;"
               ng-click="loginD()"
             >
               Login
@@ -71,19 +71,22 @@
           </div>
         </form>
         <br />
-        <h6 style="margin-left: 50px">
+        <h6 style="margin-left: 90px; color: #3f3d56;">
           Are You a New Commer. Click here
-          <a ui-sref="Dregister" style="color: rgba(246, 153, 118, 255)"
+          <a ui-sref="Dregister" style="color: #3f3d56"
             >Register</a
           >
         </h6>
       </div>
 
-      <div style="margin-left: 00px; margin-top: 20px">
-        <image
-          src="https://cdn.dribbble.com/users/1379299/screenshots/5736613/media/dd3fb657f8efbb32ce8bf99644ddd716.png"
+      <div style="margin-left: 100px; margin-top: 20px;">
+        <image style="height: 300px; width: 400px; margin-top: 70px;"
+          src="https://www.trusted-doctor.com/parts/assets/undraw_medicine_b1ol.svg"
         ></image>
       </div>
-    </div>
+      <br>
+      <br>
+      </div>
+      <br>
   </body>
 </html>

@@ -1,0 +1,37 @@
+To send the data in the desired format with double quotes around the keys, you need to modify the way you are constructing your `medicines` array. You should create objects with double-quoted keys in JavaScript. Here's the corrected code:
+
+```javascript
+$scope.Submit = function (id) {
+  var Id = id;
+  console.log(Id);
+
+  var formattedMedicines = [];
+
+  for (var i = 0; i < $scope.medicines.length; i++) {
+    var medicine = {
+      "Id": Id,
+      "name": $scope.medicines[i].name || "",
+      "dose": $scope.medicines[i].dose || "",
+      "instructions": $scope.medicines[i].instructions || ""
+    };
+    formattedMedicines.push(medicine);
+  }
+
+  console.log(formattedMedicines);
+
+  $http({
+    method: "POST",
+    url: "https://10.21.87.196:8000/prescription/",
+    withCredentials: true,
+    data: formattedMedicines, // Use 'data' to send the formattedMedicines array as JSON
+  })
+    .then(function (response) {
+      console.log("Data successfully sent to the server:", response.data);
+    })
+    .catch(function (error) {
+      console.error("Error sending data to the server:", error);
+    });
+};
+```
+
+In this code, I've created a new array `formattedMedicines`, and for each medicine object in `$scope.medicines`, I construct a new object with double-quoted keys and push it into the `formattedMedicines` array. Then, I send the `formattedMedicines` array in the POST request using the `data` property to ensure it's sent as a JSON array with double-quoted keys.

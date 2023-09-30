@@ -13,6 +13,9 @@
     <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
     <style>
+      body {
+        background-color: #9f8ff2;
+      }
       .sidebar {
         height: 100%;
         width: 0;
@@ -20,7 +23,6 @@
         z-index: 1;
         top: 0;
         left: 0;
-        background-color: #111;
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 60px;
@@ -51,65 +53,99 @@
         transition: margin-left 0.5s;
         padding: 16px;
       }
+      #image {
+        margin-left: 770px;
+        margin-top: -480px;
+        height: 350px;
+      }
     </style>
   </head>
   <body ng-app="myApp" ng-controller="myCtrl">
-    <div id="mySidebar" class="sidebar">
+    <div id="mySidebar" style="background-color: #3b227a" class="sidebar">
       <li ng-repeat="panel in panels">
         <i class=" {{panel.icon}}"></i>
-        <a href="" ng-click="handleHeadingClick(panel.id)">{{panel.heading}}</a>
+        <a href="" style="color: white" ng-click="handleHeadingClick(panel.id)"
+          >{{panel.heading}}</a
+        >
       </li>
     </div>
 
     <div id="main">
-      <span id="openSidebarBtn" ng-click="openSidebar()">&#9776;</span>
-      <h1 style="text-align: center; margin-top: 30px">{{pageTitle}}</h1>
-      <div ng-show="showDashboardContent">
-        <div ng-repeat="user in users">
-          <h1 style="margin-left: 100px; margin-top: 40px; font-size: 50px">
+      <span id="openSidebarBtn" style="color: #3b227a" ng-click="openSidebar()"
+        >&#9776;</span
+      >
+      <h1
+        style="
+          text-align: center;
+          margin-top: 20px;
+          font-size: 50px;
+          color: #3b227a;
+        "
+      >
+        {{pageTitle}}
+      </h1>
+      <div
+        ng-show="showDashboardContent"
+        style="
+          background-color: white;
+          height: 450px;
+          border-radius: 25px;
+          width: 1150px;
+          margin-left: 60px;
+        "
+      >
+        <div ng-repeat="user in users" style="margin-top: 60px">
+          <h1
+            style="
+              margin-left: 50px;
+              margin-top: 90px;
+              font-size: 50px;
+              color: #3b227a;
+            "
+          >
             Welcome , {{ user.firstname }} {{ user.lastname }}
           </h1>
-          <br /><br />
+          <br />
           <div style="display: flex">
-            <div style="margin-left: 300px">
-              <label style="font-size: 30px">FirstName:</label
+            <div style="margin-left: 50px">
+              <label style="font-size: 30px; color: #3b227a">FirstName:</label
               ><input
                 type="text"
-                style="width: 300px"
+                style="width: 300px; color: #3b227a"
                 class="form-control"
                 value="{{user.firstname}}"
                 placeholder="Enter Firstname"
               /><br /><br />
-              <label style="font-size: 30px">LastName:</label
+              <label style="font-size: 30px; color: #3b227a">LastName:</label
               ><input
                 type="text"
-                style="width: 300px"
+                style="width: 300px; color: #3b227a"
                 class="form-control"
                 value="{{user.lastname}}"
                 placeholder="Enter LastName"
               /><br /><br />
-              <label style="font-size: 30px">Age:</label
+              <label style="font-size: 30px; color: #3b227a">Age:</label
               ><input
                 type="text"
-                style="width: 300px"
+                style="width: 300px; color: #3b227a"
                 class="form-control"
                 value="{{user.age}}"
                 placeholder="Enter LastName"
               /><br />
             </div>
-            <div style="margin-left: 120px">
-              <label style="font-size: 30px">Username:</label
+            <div style="margin-left: 60px">
+              <label style="font-size: 30px; color: #3b227a">Username:</label
               ><input
                 type="text"
-                style="width: 300px"
+                style="width: 300px; color: #3b227a"
                 class="form-control"
                 value="{{user.username}}"
                 placeholder="Enter Firstname"
               /><br /><br />
-              <label style="font-size: 30px">Gender:</label
+              <label style="font-size: 30px; color: #3b227a">Gender:</label
               ><input
                 type="text"
-                style="width: 300px"
+                style="width: 300px; color: #3b227a"
                 class="form-control"
                 value="{{user.gender}}"
                 placeholder="Enter LastName"
@@ -117,14 +153,29 @@
             </div>
           </div>
         </div>
+        <image
+          id="image"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvheW4I5N_Hix_lvmDwJBsYFazjiaSu5q9zxCQ3ewyobcs_4nHWwiS4JU6Z_u0CPWV8jQ&usqp=CAU"
+        ></image>
       </div>
     </div>
-    <div ng-show="showAppointmentsContent">
+    <div
+      ng-show="showAppointmentsContent"
+      style="
+        background-color: white;
+        height: 500px;
+        width: 1050px;
+        margin-left: 130px;
+        border-radius: 25px;
+      "
+    >
+      <br />
       <div style="display: flex; margin-top: 80px">
         <div class="form-group" style="margin-left: 100px">
-          <label for="exampleInputmedicalissue">Medical Issue</label>
+          <h3 style="color: #3b227a; font-size: 30px">Medical Issue</h3>
           <input
             type="text"
+            style="color: #3b227a"
             class="form-control"
             id="exampleInputmedicalissue"
             ng-model="medicalIssue"
@@ -132,9 +183,10 @@
           />
         </div>
         <div class="form-group" style="margin-left: 100px">
-          <label for="exampleInputmedicalhistory">Medical History</label>
+          <h3 style="color: #3b227a; font-size: 30px">Medical History</h3>
           <input
             type="text"
+            style="color: #3b227a"
             class="form-control"
             id="exampleInputmedicalhistory"
             ng-model="medicalHistory"
@@ -142,8 +194,9 @@
           />
         </div>
         <div class="form-group" style="margin-left: 100px">
-          <label for="exampleInputdate">Date</label>
+          <h3 style="color: #3b227a; font-size: 30px">Date</h3>
           <input
+            style="color: #3b227a"
             placeholder="Year-Month-Date"
             class="form-control"
             id="exampleInputdate"
@@ -155,40 +208,51 @@
 
       <div style="display: flex; margin-top: 50px">
         <div style="margin-left: 100px">
-          <label for="exampleInputtime">Time</label><br />
+          <h3 style="color: #3b227a; font-size: 30px">Time</h3>
           <select
+            style="color: #3b227a"
             ng-model="selectedTime"
             ng-options="time.time for time in Times"
           >
-            <option value="">Select an Appointment Time</option>
+            <option style="color: #3b227a" value="">
+              Select an Appointment Time
+            </option>
           </select>
         </div>
 
-        <div style="margin-left: 140px; margin-top: 30px">
-          <label for="departmentDropdown">Select Department:</label>
-          <select
-            id="departmentDropdown"
-            ng-model="selectedDepartment"
-            ng-options="department.department for department in departments"
-            ng-change="getDoctors()"
-          >
-            <option value="">Select Department</option>
-          </select>
-
-          <label for="doctorDropdown">Select Doctor:</label>
-          <select id="doctorDropdown" ng-model="selectedDoctor">
-            <option value="">Select Doctor</option>
-            <option ng-repeat="doctor in doctors" value="{{ doctor.id }}">
-              {{ doctor.firstname }}
-            </option>
-          </select>
+        <div style="margin-left: 100px; margin-top: 20px; display: flex">
+          <div>
+            <h3 style="color: #3b227a; font-size: 25px">Select Department</h3>
+            <select
+              style="color: #3b227a"
+              id="departmentDropdown"
+              ng-model="selectedDepartment"
+              ng-options="department.department for department in departments"
+              ng-change="getDoctors()"
+            >
+              <option value="">Select Department</option>
+            </select>
+          </div>
+          <div style="margin-left: 100px">
+            <h3 style="color: #3b227a; font-size: 25px">Select Doctor</h3>
+            <select
+              style="color: #3b227a"
+              id="doctorDropdown"
+              ng-model="selectedDoctor"
+            >
+              <option value="">Select Doctor</option>
+              <option ng-repeat="doctor in doctors" value="{{ doctor.id }}">
+                {{ doctor.firstname }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
 
       <button
         type="button"
         class="btn btn-secondary"
-        style="margin-left: 550px; margin-top: 80px"
+        style="margin-left: 430px; margin-top: 80px; background-color: #3b227a"
         ng-click="bookAppointment()"
       >
         Book My Appointment
@@ -198,35 +262,36 @@
       <div id="makepdf">
         <div
           style="
-            border: 2px solid black;
-            height: 560px;
+            border: 5px solid #3b227a;
+            height: 500px;
             width: 600px;
             margin-left: 350px;
             margin-top: -20px;
+            background-color: white;
           "
         >
           <div>
             <image
               style="height: 100px; width: 150px; margin-left: 220px"
-              src="https://imgs.search.brave.com/9bdsVssqE9slyLgHWFq7sm5cghzEQMXed_ApNj9eLLQ/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9jbGlw/YXJ0LWxpYnJhcnku/Y29tL2ltYWdlcy9r/YzhvZGc4OWkuanBn"
+              src="https://seeklogo.com/images/D/doctor-medical-mk-logo-A197A7A78F-seeklogo.com.png"
             ></image>
           </div>
-          <div>
-            <table class="table">
-              <thead>
+          <div style="background-color: #3b227a">
+            <table class="table" style="background-color: #3b227a">
+              <thead style="background-color: #3b227a">
                 <tr>
-                  <th>Appointment:</th>
-                  <th>Medicine:</th>
-                  <th>Dose:</th>
-                  <th>Instruction:</th>
+                  <th style="color: #3b227a">Appointment:</th>
+                  <th style="color: #3b227a">Medicine:</th>
+                  <th style="color: #3b227a">Dose:</th>
+                  <th style="color: #3b227a">Instruction:</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="user in users">
-                  <td>{{ user.appointment }}</td>
-                  <td>{{ user.medicine_name }}</td>
-                  <td>{{ user.dosage}}</td>
-                  <td>{{ user.instruction }}</td>
+                  <td style="color: #3b227a">{{ user.appointment }}</td>
+                  <td style="color: #3b227a">{{ user.medicine_name }}</td>
+                  <td style="color: #3b227a">{{ user.dosage}}</td>
+                  <td style="color: #3b227a">{{ user.instruction }}</td>
                 </tr>
               </tbody>
             </table>
@@ -236,7 +301,7 @@
       </div>
       <button
         id="button"
-        style="margin-left: 590px; margin-top: 10px"
+        style="margin-left: 590px; margin-top: 10px; background-color: #3b227a"
         type="button"
         ng-click="download()"
         class="btn btn-dark"
@@ -246,30 +311,31 @@
     </div>
 
     <div ng-show="showPaymentContent">
-      <div id="makepdf">
+      <div id="makepdf" >
         <div style="margin-left: 90px; margin-right: 90px">
-          <table class="table">
+          <table class="table" style="border: 3px solid #3b227a;">
             <thead>
               <tr>
-                <th>Appointment:</th>
-                <th>Date:</th>
-                <th>FirstName:</th>
-                <th>Medical Issue:</th>
-                <th>Action:</th>
+                <th style="color: #3b227a">Appointment:</th>
+                <th style="color: #3b227a">Date:</th>
+                <th style="color: #3b227a">FirstName:</th>
+                <th style="color: #3b227a">Medical Issue:</th>
+                <th style="color: #3b227a">Action:</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="item in users">
-                <td>{{ item.id }}</td>
-                <td>{{ item.registerdate }}</td>
-                <td>{{ item.firstname}}</td>
-                <td>{{ item.medical }}</td>
+                <td style="color: #3b227a">{{ item.id }}</td>
+                <td style="color: #3b227a">{{ item.registerdate }}</td>
+                <td style="color: #3b227a">{{ item.firstname}}</td>
+                <td style="color: #3b227a">{{ item.medical }}</td>
                 <td>
                   <button
                     class="btn btn-dark"
                     ng-if="item.paystatus"
                     ng-click="billAction(item)"
                     onclick="document.getElementById('id01').style.display='block'"
+                    style="background-color: #3b227a"
                   >
                     Bill
                   </button>
@@ -290,6 +356,7 @@
                     class="btn btn-dark"
                     ng-if="!item.paystatus"
                     ng-click="paymentAction(item)"
+                    style="background-color: #3b227a"
                   >
                     Payment
                   </button>
