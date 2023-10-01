@@ -52,11 +52,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider) {
 
   $urlRouterProvider.otherwise("/hospital");
 });
+
+// var url = "https://10.21.87.196"
+
 myApp.controller("HospitalController", [
   "$scope",
   "$state",
   "$http",
-  function ($scope, $state, $http) {
+  function ($scope, $state) {
     $scope.Patient = function () {
       $state.go("Pregister");
     };
@@ -174,16 +177,16 @@ myApp.controller("doctorregController", function ($scope, $state, $http) {
       return;
     }
     var data = {
-      name : $scope.name,
-      firstname : $scope.firstname,
-      lastname : $scope.lastname,
+      name: $scope.name,
+      firstname: $scope.firstname,
+      lastname: $scope.lastname,
       email: $scope.email,
       gender: $scope.gender,
-      department : $scope.selectedDepartment.id,
-      password : $scope.password,
-      confirmpassword : $scope.confirmpassword,
-    }
-    console.log(data)
+      department: $scope.selectedDepartment.id,
+      password: $scope.password,
+      confirmpassword: $scope.confirmpassword,
+    };
+    console.log(data);
     $http({
       method: "POST",
       url: "https://10.21.87.196:8000/staffregister/",
@@ -317,13 +320,23 @@ myApp.controller("doctorloginController", function ($scope, $state, $http) {
       method: "POST",
       url: "https://10.21.87.196:8000/stafflogin/",
       withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
       data: $scope.user,
     }).then(
       function (response) {
         if (response.data.message === "Doctor") {
+          Swal.fire({
+            title: "Doctor Logged In Successfully",
+            width: 600,
+            padding: "3em",
+            color: "#716add",
+            background: "#fff url(/images/trees.png)",
+            backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+          });
           $state.go("Ddashboard");
         } else if (response.data.message === "Stafflogin") {
           Swal.fire({
@@ -379,7 +392,8 @@ myApp.controller("doctorloginController", function ($scope, $state, $http) {
 myApp.controller("Pdashboardcontroller", [
   "$scope",
   "$http",
-  function ($scope, $http) {
+  "$state",
+  function ($scope, $http, $state) {
     $scope.pageTitle = "";
     $http({
       method: "GET",
@@ -449,7 +463,9 @@ myApp.controller("Pdashboardcontroller", [
             $scope.showPrescription();
           } else if (Response.data.message === "Payment/Bill") {
             $scope.showPayments();
-          } else {
+          } else if (Response.data.message === "Records") {
+            $scope.showRecords();
+          }  {
             console.error("error in response");
           }
         },
@@ -465,6 +481,7 @@ myApp.controller("Pdashboardcontroller", [
       $scope.showAppointmentsContent = false;
       $scope.showPrescriptionsContent = false;
       $scope.showPaymentContent = false;
+      $scope.showRecordsContent = false;
       $scope.closeSidebar();
     };
 
@@ -474,6 +491,7 @@ myApp.controller("Pdashboardcontroller", [
       $scope.showAppointmentsContent = true;
       $scope.showPrescriptionsContent = false;
       $scope.showPaymentContent = false;
+      $scope.showRecordsContent = false;
 
       $scope.getDepartments = function () {
         $http
@@ -573,23 +591,17 @@ myApp.controller("Pdashboardcontroller", [
         let makepdf = document.getElementById("makepdf");
 
         button.addEventListener("click", function () {
-          let mywindow = window.open("", "PRINT", "height=400,width=600");
-
+          let mywindow = window.open("_blank");
           mywindow.document.write(makepdf.innerHTML);
-
-          mywindow.document.close();
-          mywindow.focus();
-
           mywindow.print();
-          mywindow.close();
-
-          return true;
         });
       };
+
       $scope.showDashboardContent = false;
       $scope.showAppointmentsContent = false;
       $scope.showPrescriptionsContent = true;
       $scope.showPaymentContent = false;
+      $scope.showRecordsContent = false;
       $scope.closeSidebar();
     };
 
@@ -662,8 +674,45 @@ myApp.controller("Pdashboardcontroller", [
       $scope.showAppointmentsContent = false;
       $scope.showPrescriptionsContent = false;
       $scope.showPaymentContent = true;
+      $scope.showRecordsContent = false;
       $scope.closeSidebar();
     };
+
+    $scope.logout = function () {
+      $state.go("hospital");
+      $http({
+        method: "POST",
+        url: "https://10.21.87.196:8000/logouut/",
+        withCredentials: true,
+      })
+        .then(function () {
+          console.log(Logout);
+        })
+        .catch(function (error) {
+          console.error("Error ", error);
+        });
+    };
+    $scope.showRecords = function(){
+      $scope.pageTitle = "Appointment Records";
+      $http({
+        method: "GET",
+        url: "https://10.21.87.196:8000/previousappointment/",
+        withCredentials: true,
+      })
+        .then(function (response) {
+          console.log("Fetched Data :", response.data);
+          $scope.records = response.data;
+        })
+        .catch(function (error) {
+          console.error("Error ", error);
+        });
+      $scope.showDashboardContent = false;
+      $scope.showAppointmentsContent = false;
+      $scope.showPrescriptionsContent = false;
+      $scope.showPaymentContent = false;
+      $scope.showRecordsContent = true;
+      $scope.closeSidebar();
+    }
   },
 ]);
 
@@ -842,7 +891,6 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
 
     $scope.Sent = function (id) {
       console.log(" button clicked for ID: " + id);
-      $scope.selectedTime = "";
       var id = id;
       console.log(id);
       date = $scope.appointments.reject;
@@ -909,33 +957,32 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
     $scope.Submit = function (id) {
       var Id = id;
       console.log(Id);
-    
+
       var formattedMedicines = [];
-    
+
       for (var i = 0; i < $scope.medicines.length; i++) {
         var medicine = {
-          "Id": Id,
-          "name": $scope.medicines[i].name || "",
-          "dose": $scope.medicines[i].dose || "",
-          "instructions": $scope.medicines[i].instructions || ""
+          Id: Id,
+          name: $scope.medicines[i].name || "",
+          dose: $scope.medicines[i].dose || "",
+          instructions: $scope.medicines[i].instructions || "",
         };
         formattedMedicines.push(medicine);
       }
-    
+
       console.log(formattedMedicines);
-    
+
       $http({
         method: "POST",
         url: "https://10.21.87.196:8000/prescription/",
         withCredentials: true,
-        data: formattedMedicines, 
+        data: formattedMedicines,
       })
         .then(function (response) {
-          $scope.medicines[i].name="",
-          $scope.medicines[i].dose="",
-          $scope.medicines[i].instructions="",
-
-          console.log("Data successfully sent to the server:", response.data);
+          ($scope.medicines[i].name = ""),
+            ($scope.medicines[i].dose = ""),
+            ($scope.medicines[i].instructions = ""),
+            console.log("Data successfully sent to the server:", response.data);
         })
         .catch(function (error) {
           console.error("Error sending data to the server:", error);
@@ -967,9 +1014,23 @@ myApp.controller("Ddashboardcontroller", function ($scope, $http, $state) {
     $scope.showPatientsContent = true;
     $scope.closeSidebar();
   };
+  $scope.logout = function () {
+    $state.go("hospital");
+    $http({
+      method: "POST",
+      url: "https://10.21.87.196:8000/logouut/",
+      withCredentials: true,
+    })
+      .then(function () {
+        console.log(Logout);
+      })
+      .catch(function (error) {
+        console.error("Error ", error);
+      });
+  };
 });
 
-myApp.controller("Rcontroller", function ($scope, $http) {
+myApp.controller("Rcontroller", function ($scope, $http, $state) {
   $scope.pageTitle = "";
   $http({
     method: "GET",
@@ -991,6 +1052,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
   $scope.showAppointmentsContent = false;
   $scope.showDoctorsContent = false;
   $scope.showPaymentsContent = false;
+  $scope.showReportsContent = false;
 
   $scope.openSidebar = function () {
     document.getElementById("mySidebar").style.width = "250px";
@@ -1035,8 +1097,10 @@ myApp.controller("Rcontroller", function ($scope, $http) {
           $scope.showPatients();
         } else if (Response.data.message === "Doctors") {
           $scope.showDoctors();
-        } else if (Response.data.message === "Payment/Bill") {
+        } else if (Response.data.message === "Payment") {
           $scope.showPayment();
+        } else if (Response.data.message === "Report") {
+          $scope.showReport();
         } else {
           console.error("error in response");
         }
@@ -1058,6 +1122,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showPatientsContent = false;
     $scope.showDoctorsContent = false;
     $scope.showPaymentsContent = false;
+    $scope.showReportsContent = false;
     $scope.closeSidebar();
   };
 
@@ -1170,6 +1235,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showPatientsContent = false;
     $scope.showDoctorsContent = false;
     $scope.showPaymentsContent = false;
+    $scope.showReportsContent = false;
     $scope.closeSidebar();
   };
   $scope.showPatients = function () {
@@ -1226,6 +1292,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showPatientsContent = true;
     $scope.showDoctorsContent = false;
     $scope.showPaymentsContent = false;
+    $scope.showReportsContent = false;
     $scope.closeSidebar();
   };
   $scope.showDoctors = function () {
@@ -1266,11 +1333,12 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showPatientsContent = false;
     $scope.showDoctorsContent = true;
     $scope.showPaymentsContent = false;
+    $scope.showReportsContent = false;
     $scope.closeSidebar();
   };
 
   $scope.showPayment = function () {
-    $scope.pageTitle = "Payment/Bill";
+    $scope.pageTitle = "Payment";
     $http({
       method: "GET",
       url: "https://10.21.87.196:8000/appointpayment/",
@@ -1289,6 +1357,7 @@ myApp.controller("Rcontroller", function ($scope, $http) {
     $scope.showPatientsContent = false;
     $scope.showDoctorsContent = false;
     $scope.showPaymentsContent = true;
+    $scope.showReportsContent = false;
     $scope.closeSidebar();
 
     $scope.Submit = function (Id) {
@@ -1313,5 +1382,86 @@ myApp.controller("Rcontroller", function ($scope, $http) {
           console.error("Error submitting payment:", error);
         });
     };
+  };
+  $scope.showReport = function () {
+    $scope.pageTitle = "Reports Analysis";
+    $http({
+      method: "GET",
+      url: "https://10.21.87.196:8000/chart/",
+      withCredentials: true,
+    })
+      .then(function (response) {
+        const yValues = response.data;
+        console.log(yValues);
+        const xValues = ["Doctors", "Patients", "Appointments", "Departments"];
+
+        const barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9"];
+
+        new Chart("Chart", {
+          type: "pie",
+          data: {
+            labels: xValues,
+            datasets: [
+              {
+                backgroundColor: barColors,
+                data: yValues,
+              },
+            ],
+          },
+        });
+      })
+      .catch(function (error) {
+        console.error("Error fetching reports: " + error);
+      });
+
+    $http({
+      method: "GET",
+      url: "https://10.21.87.196:8000/chart/",
+      withCredentials: true,
+    })
+      .then(function (response) {
+        const yValues = response.data;
+        console.log(yValues);
+        const xValues = ["Doctors", "Patients", "Appointments", "Departments"];
+
+        const barColors = ["red", "green", "blue", "orange"];
+
+        new Chart("myChart", {
+          type: "bar",
+          data: {
+            labels: xValues,
+            datasets: [
+              {
+                backgroundColor: barColors,
+                data: yValues,
+              },
+            ],
+          },
+        });
+      })
+      .catch(function (error) {
+        console.error("Error fetching reports: " + error);
+      });
+    $scope.showDashboardContent = false;
+    $scope.showAppointmentsContent = false;
+    $scope.showPatientsContent = false;
+    $scope.showDoctorsContent = false;
+    $scope.showPaymentsContent = false;
+    $scope.showReportsContent = true;
+    $scope.closeSidebar();
+  };
+  $scope.logout = function () {
+    $state.go("hospital");
+    $http({
+      method: "POST",
+      url: "https://10.21.87.196:8000/logouut/",
+      withCredentials: true,
+    })
+      .then(function () {
+        console.log(Logout);
+      })
+      .catch(function (error) {
+        console.error("Error ", error);
+      });
   };
 });

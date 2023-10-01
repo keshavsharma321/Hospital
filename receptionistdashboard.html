@@ -8,6 +8,7 @@
     <script src="./node_modules/sweetalert2/dist/sweetalert2.min.css"></script>
     <script src="./node_modules/angular/angular.js"></script>
     <script src="./node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <script src="hos.js"></script>
     
     <style>
@@ -47,7 +48,7 @@
 
         #main {
             transition: margin-left .5s;
-            padding: 45px;
+            padding: 64px;
             background-color: #b4e4fb;
             /* height: 655px; */
         }
@@ -63,15 +64,15 @@
 <body>
     <div id="mySidebar" style="background-color: #3b227a;" class="sidebar">
         <div ng-repeat="panel in panels">
-            <!-- <i class="{{panel.icon}}"></i> -->
-        <a href="" style="color: white;" ng-click="handleHeadingClick(panel.id)">{{panel.heading}}</a>
+        <a href="" style="color: white;" ng-click="handleHeadingClick(panel.id)"><i style="color: white; height: 15px;" class=" {{panel.icon}}"></i>{{panel.heading}}</a>
         </div>
+        <button style="background-color: #3b227a; color: white; margin-left: 23px;" class="btn btn-primary" ng-click="logout()">Logout</button>
     </div>
 
     <div id="main">
         <span id="openSidebarBtn" style="color: #3b227a;" ng-click="openSidebar()">&#9776;</span>
-        <h1 style="text-align: center; margin-top: 30px;color:#3b227a">{{pageTitle}}</h1>
-        <div ng-show="showDashboardContent" style=" width:1200px; border: 2px solid #3b227a; border-radius: 25px; margin-left: 40px ; margin-top: 70px; background-color: #b4e4fb;" >
+        <h1 style="text-align: center; margin-top: 10px;color:#3b227a">{{pageTitle}}</h1>
+        <div ng-show="showDashboardContent" style=" width:1200px; border: 2px solid #3b227a; border-radius: 25px; margin-left: 10px ; margin-top: 40px; background-color: #b4e4fb;" >
             <h1
             style="
               margin-top: 50px;
@@ -264,6 +265,17 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div ng-show="showReportsContent" style="margin-left: 150px; margin-top: 120px;">
+        <div style="display: flex;">
+            <div>
+           <canvas id="myChart" style="width:160%;max-width:900px"></canvas>
+           </div>
+
+           <div style="margin-left: 30px;">
+           <canvas id="Chart" style="width:160%;max-width:900px"></canvas>
+           </div>
+           </div>
     </div>
 
 </body>
